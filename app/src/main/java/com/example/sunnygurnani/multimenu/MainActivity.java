@@ -3,6 +3,7 @@ package com.example.sunnygurnani.multimenu;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -54,9 +55,10 @@ public class MainActivity extends Activity
                 break;
             //Map
             case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, Map.newInstance(position))
-                        .commit();
+                Context context= this;
+                Intent intent=new Intent(context,Geolocation.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             //Flash
             case 2:
@@ -89,6 +91,7 @@ public class MainActivity extends Activity
                 break;
             case 1:
                 mTitle = getString(R.string.title_map);
+
                 break;
             case 2:
                 mTitle = getString(R.string.title_flash);

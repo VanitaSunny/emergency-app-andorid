@@ -58,7 +58,7 @@
             android:label="@string/title_activity_geolocation" >
         </activity>
         <activity
-            android:name="com.example.npu.emergency.Geolocation"
+            android:name=".Geolocation"
             android:label="@string/title_activity_geolocation" >
         </activity>
     </application>

@@ -28,4 +28,16 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string name="title_activity_geolocation">Map</string>
+    <string-array name="place_type">
+        <item>atm</item>
+        <item>doctor</item>
+        <item>hospital</item>
+    </string-array>
+
+    <string-array name="place_type_name">
+        <item>ATM</item>
+        <item>Doctor</item>
+        <item>Hospital</item>
+    </string-array>
 </resources>
