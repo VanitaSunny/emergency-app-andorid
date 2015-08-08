@@ -57,10 +57,7 @@
             android:name=".Geolocation"
             android:label="@string/title_activity_geolocation" >
         </activity>
-        <activity
-            android:name=".Geolocation"
-            android:label="@string/title_activity_geolocation" >
-        </activity>
+
     </application>
 
 </manifest>
