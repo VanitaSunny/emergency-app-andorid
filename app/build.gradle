@@ -5,7 +5,11 @@ android {
     buildToolsVersion "23.0.0 rc3"
     defaultConfig {
         applicationId "com.example.npu.emergency"
+       // Updated upstream
         minSdkVersion 16
+
+        minSdkVersion 21
+       // Stashed changes
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
