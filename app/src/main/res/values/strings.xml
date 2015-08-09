@@ -30,14 +30,24 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_geolocation">Map</string>
     <string-array name="place_type">
+        <item>airport</item>
         <item>atm</item>
+        <item>bank</item>
+        <item>bus_station</item>
         <item>doctor</item>
         <item>hospital</item>
+        <item>movie_theater</item>
+        <item>restaurant</item>
     </string-array>
 
     <string-array name="place_type_name">
+        <item>Airport</item>
         <item>ATM</item>
+        <item>Bank</item>
+        <item>Bus Station</item>
         <item>Doctor</item>
         <item>Hospital</item>
+        <item>Movie Theater</item>
+        <item>Restaurant</item>
     </string-array>
 </resources>
