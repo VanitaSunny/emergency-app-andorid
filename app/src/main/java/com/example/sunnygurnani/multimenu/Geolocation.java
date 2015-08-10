@@ -52,7 +52,6 @@ public class Geolocation extends FragmentActivity implements LocationListener
     double mLongitude=0;
     HashMap<String, String> mMarkerPlaceLink = new HashMap<String, String>();
     private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +161,7 @@ public class Geolocation extends FragmentActivity implements LocationListener
                 @Override
                 public void onClick(View v)
                 {
+
                     int selectedPosition = mSprPlaceType.getSelectedItemPosition();
                     String type = mPlaceType[selectedPosition];
 
