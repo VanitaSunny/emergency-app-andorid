@@ -9,7 +9,8 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_homepage">
+        android:background="@drawable/background_homepage"
+        >
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -37,25 +38,38 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textview1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:id="@+id/textview1"
             android:gravity="center_horizontal"
+            android:text="In Emergency, call 911"
+            android:layout_gravity="bottom"
             android:padding="15dp"
-            android:text="Make alternative communication arrangements, call 911 if needed."
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="25sp"/>
 
         <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/flashButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:layout_gravity="right|bottom"
-            android:layout_marginBottom="88dp"
+            android:layout_marginBottom="68dp"
             android:layout_marginRight="40dp"
+
             android:background="@mipmap/flash_on" />
     </FrameLayout>
 
+
+    <!-- The navigation drawer -->
+    <!-- <ListView android:id="@+id/left_drawer"
+         android:layout_width="240dp"
+         android:layout_height="match_parent"
+         android:layout_gravity="start"
+         android:choiceMode="singleChoice"
+         android:divider="#666"
+         android:dividerHeight="1dp"
+         android:background="#333"
+         android:paddingLeft="15sp"
+         android:paddingRight="15sp" />-->
 </FrameLayout>
