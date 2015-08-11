@@ -52,6 +52,7 @@ public class Geolocation extends FragmentActivity implements LocationListener
     double mLongitude=0;
     HashMap<String, String> mMarkerPlaceLink = new HashMap<String, String>();
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,20 +74,6 @@ public class Geolocation extends FragmentActivity implements LocationListener
         // Setting adapter on Spinner to set place types
         mSprPlaceType.setAdapter(adapter);
 
-        //KINJ Button btnFind;
-
-        // Getting reference to Find Button
-   /* KINJ
-    * btnFind = ( Button ) findViewById(R.id.btn_find);
-    btnFind.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, PlaceDetailsActivity.class);
-
-            // Starting the Place Details Activity
-            startActivity(intent);
-        }
-    });*/
 
         // Getting Google Play availability status
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
@@ -101,7 +88,6 @@ public class Geolocation extends FragmentActivity implements LocationListener
         {
             // Google Play Services are available
             // Getting reference to the SupportMapFragment
-            //KINJ SupportMapFragment fragment = ( SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
             map = (MapView) findViewById(R.id.map);
 
@@ -112,9 +98,6 @@ public class Geolocation extends FragmentActivity implements LocationListener
             MapsInitializer.initialize(getApplicationContext());
 
             mGoogleMap.setMyLocationEnabled(true);
-
-            // Getting Google Map
-            //KINJ mGoogleMap = fragment.getMap();
 
             // Enabling MyLocation in Google Map
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -161,13 +144,12 @@ public class Geolocation extends FragmentActivity implements LocationListener
                 @Override
                 public void onClick(View v)
                 {
-
                     int selectedPosition = mSprPlaceType.getSelectedItemPosition();
                     String type = mPlaceType[selectedPosition];
 
                     StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
                     sb.append("location="+mLatitude+","+mLongitude);
-                    sb.append("&radius=50000");
+                    sb.append("&radius=5000");
                     sb.append("&types="+type);
                     sb.append("&sensor=true");
                     sb.append("&key="+"AIzaSyBbdw04GUIhTJ4svDRk9j6u898t14Uawj8");
@@ -462,11 +444,12 @@ public class Geolocation extends FragmentActivity implements LocationListener
             progressDialog.dismiss();
         }
     }
-    protected void showOKAlertMsg(String title,String msg, final boolean isFinish)
+
+    protected void showOKAlertMsg(final String title,String msg, final boolean isFinish)
     {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
-        dialogBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener()
+        dialogBuilder.setNeutralButton("Ok", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)
             {

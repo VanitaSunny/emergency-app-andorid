@@ -13,9 +13,7 @@ import java.io.IOException;
  */
 public class ContactStore {
 
-    public ContactStore(){
-
-    }
+    public ContactStore(){}
 
     public ContactStore(android.app.Activity activity) {
         readFromFile(activity);
@@ -66,7 +64,6 @@ public class ContactStore {
             ContactStore contactStore = gson.fromJson(fileContent.toString(), ContactStore.class);
             this.contact_1 = contactStore.contact_1;
             this.contact_2 = contactStore.contact_2;
-            //this.personalInfo = contactStore.personalInfo;
 
         }
         catch (IOException e){

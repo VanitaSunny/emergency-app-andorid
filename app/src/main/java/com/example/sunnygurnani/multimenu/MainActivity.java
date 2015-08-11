@@ -2,18 +2,23 @@ package com.example.sunnygurnani.multimenu;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ShareActionProvider;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnFragmentInteractionListener {
 
+    private ShareActionProvider mShareActionProvider;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -60,14 +65,9 @@ public class MainActivity extends Activity
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
-            //Flash
-            case 2:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, FlashLight.newInstance(position ))
-                        .commit();
-                break;
+
             //Developers
-            case 3:
+            case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, DevelopersProfile.newInstance(position ))
                         .commit();
@@ -77,11 +77,6 @@ public class MainActivity extends Activity
 
         }
 
-        /*
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-                */
     }
 
     public void onSectionAttached(int number) {
@@ -94,9 +89,6 @@ public class MainActivity extends Activity
 
                 break;
             case 2:
-                mTitle = getString(R.string.title_flash);
-                break;
-            case 3:
                 mTitle = getString(R.string.title_developer_profile);
                 break;
         }
@@ -111,19 +103,6 @@ public class MainActivity extends Activity
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -136,10 +115,10 @@ public class MainActivity extends Activity
             intent = new Intent(this, EmergencyContactActivity.class);
         }
         else if (id == R.id.action_about_us){
-            intent = new Intent(this, AboutUs.class);
+            aboutMenuItem();
 
         }
-        if(intent != null) {
+        if (intent != null) {
             startActivity(intent);
 
             return true;
@@ -153,6 +132,39 @@ public class MainActivity extends Activity
         onSectionAttached(sectionNumber);
     }
 
+    private void aboutMenuItem(){
+        new AlertDialog.Builder(this).setTitle("About")
+                .setMessage("Do you often find yourself in emergency situations?Do you walk alone on campus, ride subway at night or travel abroad to a new place? eHelp is an app to quickly place an emergency call in case of emergency situations and can alert someone of your whereabouts - this app will simplify explaining exactly where you are. Help can come faster and within GPS accuracy.\n" +
+                                "Define a phone number and when you tap the big red button, the text message will be sent out to the added recipient along with your GPS/Network location with time and date.\n" +
+                                "\n" +
+                                "It also gets you nearby places like hospitals etc. on a map and you can get the direction to those places with a single click.\n" +
+                                "\n" +
+                                "Disclaimer: It won't work without reception or connectivity."
+                )
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+        // Create the share Intent
+        String playStoreLink = "https://play.google.com/store/apps/details?id=" +
+                getPackageName();
+        String yourShareText = "Install this app " + playStoreLink;
+        Intent shareIntent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain").setText(yourShareText).getIntent();
+        // Set the share Intent
+        mShareActionProvider.setShareIntent(shareIntent);
+        return true;
+    }
 
 }

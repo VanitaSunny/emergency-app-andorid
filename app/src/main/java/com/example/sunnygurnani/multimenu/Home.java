@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -18,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.location.LocationListener;
+import android.location.Location;
 
 public class Home extends Fragment {
     ImageButton btnSwitch;
@@ -29,6 +32,7 @@ public class Home extends Fragment {
 
     ImageButton help_button;
     Button safe_button;
+
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -45,14 +49,13 @@ public class Home extends Fragment {
         return fragment;
     }
 
+    // created empty constructor.
     public Home() {
-        // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -65,24 +68,12 @@ public class Home extends Fragment {
 
         safe_button = (Button) view.findViewById(R.id.button);
         safe_button.setOnClickListener(onclick);
+
         btnSwitch = (ImageButton) view.findViewById(R.id.flashButton);
+        btnSwitch.setOnClickListener(onclick);
 
-        btnSwitch.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (isFlashOn) {
-                    // turn off flash
-                    turnOffFlash();
-                } else {
-                    // turn on flash
-                    turnOnFlash();
-                }
-            }
-        });
         // First check if device is supporting flashlight or not
-        hasFlash = getActivity().getApplicationContext().getPackageManager()
-                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        hasFlash = getActivity().getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!hasFlash) {
             // device doesn't support flash
             // Show alert message and close the application
@@ -91,40 +82,24 @@ public class Home extends Fragment {
             final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder.setTitle(getActivity().getTitle());
             alertDialogBuilder.setMessage("sorry, Your device dosen't support flash light");
+
             // set positive button: Yes message
             alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int id) {
-
                     dialog.dismiss();
                 }
             });
             alertDialog = alertDialogBuilder.create();
             // show alert
             alertDialog.show();
-
-//            AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
-//                    .create();
-//            alert.setTitle("Error");
-//            alert.setMessage("Sorry, your device doesn't support flash light!");
-//            alert.setButton("OK", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
-//                    // closing the application
-////                    finish();
-//                }
-//            });
-//            alert.show();
-
-            //return view;
         }
         getCamera();
         return view;
 
-        // displaying button image
-        //toggleButtonImage();
-        // Switch button click event to toggle flash on/off
 
     }
+
     // Get the camera
     private void getCamera() {
         if (camera == null) {
@@ -136,6 +111,7 @@ public class Home extends Fragment {
             }
         }
     }
+
     // Turning On flash
     private void turnOnFlash() {
         if (!isFlashOn) {
@@ -155,6 +131,7 @@ public class Home extends Fragment {
             toggleButtonImage();
         }
     }
+
     // Turning Off flash
     private void turnOffFlash() {
         if (isFlashOn) {
@@ -197,10 +174,10 @@ public class Home extends Fragment {
      * Toggle switch button images
      * changing image states to on / off
      * */
-    private void toggleButtonImage(){
-        if(isFlashOn){
+    private void toggleButtonImage() {
+        if (isFlashOn) {
             btnSwitch.setImageResource(R.mipmap.flash_off);
-        }else{
+        } else {
             btnSwitch.setImageResource(R.mipmap.flash_on);
         }
     }
@@ -228,7 +205,7 @@ public class Home extends Fragment {
         super.onResume();
 
         // on resume turn on the flash
-        if(hasFlash)
+        if (hasFlash)
             turnOnFlash();
     }
 
@@ -278,6 +255,15 @@ public class Home extends Fragment {
                     if (contact1.getPhoneNumber() != null)
                         openAlert(v);
                     break;
+                case R.id.flashButton:
+                    if (isFlashOn) {
+                        // turn off flash
+                        turnOffFlash();
+                    } else {
+                        // turn on flash
+                        turnOnFlash();
+                    }
+                    break;
             }
 
         }
@@ -288,7 +274,7 @@ public class Home extends Fragment {
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(getActivity().getTitle());
-        alertDialogBuilder.setMessage("Yor message has been sent.");
+        alertDialogBuilder.setMessage("Your message has been sent.");
 
         // set positive button: Yes message
         alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -326,12 +312,20 @@ public class Home extends Fragment {
     // function created for sending messages.
     public void sendsms(String sms) {
         SmsManager smsManager = SmsManager.getDefault();
+        StringBuffer smsBody = new StringBuffer();
+
+        smsBody.append("http://maps.google.com?q=");
         if (contact1.getPhoneNumber() != null)
             smsManager.sendTextMessage(contact1.getPhoneNumber(), null, sms, null, null);
         if (contact2.getPhoneNumber() != null)
             smsManager.sendTextMessage(contact2.getPhoneNumber(), null, sms, null, null);
 
     }
+
+    public void getLatitude(int i) {
+
+    }
+
 
     // function created to send call to the devices.
     private boolean isTelephonyEnabled() {

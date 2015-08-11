@@ -30,6 +30,7 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_geolocation">Map</string>
     <string-array name="place_type">
+        <item>choose</item>
         <item>airport</item>
         <item>atm</item>
         <item>bank</item>
@@ -41,6 +42,7 @@
     </string-array>
 
     <string-array name="place_type_name">
+        <item>Choose</item>
         <item>Airport</item>
         <item>ATM</item>
         <item>Bank</item>

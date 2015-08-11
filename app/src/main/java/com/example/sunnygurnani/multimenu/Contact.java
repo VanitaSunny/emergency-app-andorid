@@ -21,16 +21,7 @@ public class Contact {
         this.phoneNumber = contactnumber1;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String email_id_1) {
-        this.emailAddress = email_id_1;
-    }
-
     private String firstName;
     private String phoneNumber;
-    private String emailAddress;
 
 }

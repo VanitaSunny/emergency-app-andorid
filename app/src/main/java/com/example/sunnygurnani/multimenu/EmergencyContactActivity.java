@@ -13,20 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Locale;
 
 public class EmergencyContactActivity extends Activity implements ActionBar.TabListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-     */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -35,11 +28,10 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
     ViewPager mViewPager;
     ContactStore contactStore = null;
 
-    public void saveContactStore(){
+    public void saveContactStore() {
         try {
             contactStore.saveToFile(this);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
 
         }
     }
@@ -48,7 +40,7 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_contact);
-        if(contactStore == null)
+        if (contactStore == null)
             contactStore = new ContactStore(this);
 
         // Set up the action bar.
@@ -87,9 +79,6 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
     }
 
 
-
-
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
@@ -112,16 +101,16 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         ContactStore mContactStore;
+
         public SectionsPagerAdapter(FragmentManager fm, ContactStore contactStore) {
             super(fm);
             mContactStore = contactStore;
         }
 
-        Contact getContactBySectionNumber(int sectionNumber){
-            if(sectionNumber == 0){
+        Contact getContactBySectionNumber(int sectionNumber) {
+            if (sectionNumber == 0) {
                 return mContactStore.getContact_1();
-            }
-            else
+            } else
                 return mContactStore.getContact_2();
         }
 
@@ -152,21 +141,16 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    /*A placeholder fragment containing a simple view.*/
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-
+        /* The fragment argument representing the section number for this fragment.*/
 
         View rootView = null;
         private static final String ARG_SECTION_NUMBER = "section_number";
         int sectionNumber;
         EmergencyContactActivity parentActivity = null;
         Contact mContact;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -190,15 +174,12 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
             rootView = inflater.inflate(R.layout.fragment_emergency_contact, container, false);
 
             setContactInView(mContact);
-            ((Button)rootView.findViewById(R.id.save_user)).setOnClickListener(new View.OnClickListener() {
+            ((Button) rootView.findViewById(R.id.save_user)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     getContactFromView(mContact);
                     parentActivity.saveContactStore();
-                    //Context.startActivity(Home.class);
-                   // Intent i = new Intent(parentActivity, Home.class);
-                   // startActivity(i);
-                    // redirect the home page
+                    Toast.makeText(getActivity(), "Your contact has been saved", Toast.LENGTH_LONG).show();
                     parentActivity.onBackPressed();
                 }
             });
@@ -206,36 +187,30 @@ public class EmergencyContactActivity extends Activity implements ActionBar.TabL
             return rootView;
         }
 
-        void setContactInView(Contact contact){
-            EditText name = (EditText)rootView.findViewById(R.id.name_user);
+        void setContactInView(Contact contact) {
+            EditText name = (EditText) rootView.findViewById(R.id.name_user);
             name.setText(contact.getFirstName());
 
-            EditText email = (EditText)rootView.findViewById(R.id.email_user);
-            email.setText(contact.getEmailAddress());
 
-            EditText phoneNumber = (EditText)rootView.findViewById(R.id.phone_user);
+            EditText phoneNumber = (EditText) rootView.findViewById(R.id.phone_user);
             phoneNumber.setText(contact.getPhoneNumber());
 
         }
 
-        void getContactFromView(Contact contact){
-            EditText name = (EditText)rootView.findViewById(R.id.name_user);
+        void getContactFromView(Contact contact) {
+            EditText name = (EditText) rootView.findViewById(R.id.name_user);
             contact.setFirstName(name.getText().toString());
 
-            EditText email = (EditText)rootView.findViewById(R.id.email_user);
-            contact.setEmailAddress(email.getText().toString());
-
-            EditText phoneNumber = (EditText)rootView.findViewById(R.id.phone_user);
+            EditText phoneNumber = (EditText) rootView.findViewById(R.id.phone_user);
             contact.setPhoneNumber(phoneNumber.getText().toString());
 
         }
 
-
         @Override
         public void onAttach(final Activity activity) {
             super.onAttach(activity);
-            sectionNumber =  getArguments().getInt(ARG_SECTION_NUMBER);
-            parentActivity = (EmergencyContactActivity)activity;
+            sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+            parentActivity = (EmergencyContactActivity) activity;
 
         }
     }
